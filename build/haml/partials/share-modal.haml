@@ -1,0 +1,65 @@
+.share-wrapper
+  .share-top
+    .modal-inner
+      %h2
+        Share Your Results
+      .visualization-preview{ng-show: "assessmentsLoaded.length > 0"}
+        .assessment{ng-repeat: "assessment in assessmentsLoaded"}
+          %p
+            Assessment result code: 
+            %strong
+              {{assessment.code}} 
+          .preview
+            .vis
+              %img{ng-src: "/static/uploads/assessments/{{assessment.code}}/{{assessment.code}}.jpg"}
+            %a{ng-click: "removeAssessment(assessment)"}
+              %svg{version: "1.1", xmlns: "http://www.w3.org/2000/svg", x: "0", y: "0", width: "22", height: "22", viewBox: "0 0 22 22", 'xml:space': "preserve"}
+                %path{d: "M0 0 L22 22", fill: "#9b9595", stroke: "#9b9595", stroke-width: "2px"}
+                %path{d: "M0 22 L22 0", fill: "#9b9595", stroke: "#9b9595", stroke-width: "2px"}
+          .include-options
+            -#
+              %h4
+                Include:
+              %form.form.share-options
+                .checkbox
+                  %label
+                    %input{type: "checkbox", name: "visualization_{{assessment.id}}", id: "visualization_{{assessment.id}}", ng-model: "assessment.include_options.visualization"}
+                    %label.radio-mock{for: "visualization_{{assessment.id}}"}
+                    %span
+                      Radar chart
+                .checkbox
+                  %label
+                    %input{type: "checkbox", name: "assessment_{{assessment.id}}", id: "assessment_{{assessment.id}}", ng-model: "assessment.include_options.assessment"}
+                    %label.radio-mock{for: "assessment_{{assessment.id}}"}
+                    %span
+                      Your answers
+
+      .assessment-locator
+        %p
+          Your unique code for these results is 
+          %strong
+            {{finderCode}}
+  .share-bottom
+    .modal-inner
+      %form.form.share-form{ng-submit: "shareFinder()"}
+        .form-group
+          %label{for: "email-from"}
+            Your email
+          %input.form-control{type: "text", name: "email-from", id: "email-from", ng-model: "shareForm.emailfrom"}
+        .form-group
+          %label{for: "email-to"}
+            Recipient's email
+          %input.form-control{type: "text", name: "email-to", id: "email-to", ng-model: "shareForm.emailto"}
+        .form-group
+          %label{for: "email-message"}
+            Add a message 
+            %span
+              (optional)
+          %textarea.form-control{type: "text", name: "email-message", id: "email-message", ng-model: "shareForm.emailmsg"}
+        -#.checkbox
+          %label{for: "email-necec"}
+            %input{type: "checkbox", name: "email-necec", id: "email-necec", ng-model: "shareForm.sharenecec"}
+            Share your results with an <span>NECEC</span> advisor for a complimentary consultation.
+        %button.btn-link#share_btn{type: "submit", loadbtn: "loadbtn"}
+          Share your Pathfinder Results
+        %span.errors{ng-if: "shareError", ng-bind-html: "htmlSafe(shareError)"}

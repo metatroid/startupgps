@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StartupGPS Results</title>
+  <script src="/static/assets/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/static/assets/js/handlebars.min.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="/static/assets/css/main.css">
+  <style type="text/css" media="screen,print">
+    body{
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <section id="table">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          {% verbatim %}
+            <div id="table_wrapper">
+              <script id="table_template" type="text/x-handlebars-template">
+                <table id="table" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      {{#each questions}}
+                        <th>{{question_text}}</th>
+                      {{/each}}
+                      <th>Timestamp</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each assessments}}
+                      <tr>
+                        <td>{{code}}</td>
+                        {{#each ../questions}}
+                          <td class="qid_{{id}}"></td>
+                        {{/each}}
+                        <td>{{created}}</td>
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </script>
+            </div>
+          {% endverbatim %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript">
+    // var assessments = {{assessments | safe}};
+    var assessments = {{assessments | safe}};
+    var questions = {{questions | safe}};
+    var assData = {{assData | safe}}
+    // console.log(assData);
+    // var qas = [];
+    // console.log(questions);
+    // console.log(assessments);
+    // console.log(assData);
+    // for(var i=0;i<assData.length;i++){
+    //   // assData[i].answers = assData[i].answers.replace("[]","''").replace(/\[|\]/g,"").split("},").map(function(obj){return obj+"}"});
+    //   assData[i].answers = assData[i].answers.replace("[]","''").split("},").map(function(obj){return obj+"}"});
+      // assData[i] = JSON.parse(assData[i].replace(/\'/g, "\"").replace(/t"s/g,"t's").replace(/m"s/g,"m's").replace(/e"v/g,"e'v").replace(/e"r/g,"e'r").replace(/y"s/g,"y's").replace(/"investment"/g, "investment").replace(/n"t/g,"n't"));
+    // }
+    // console.log(assData);
+    // for(var i=0;i<assData.length;i++){
+    //   for(var n=0;n<assData[i].answers.length;n++){
+    //     //assData[i].answers[n] = assData[i].answers[n].replace(/\'|\"/g, "\"").replace(/\"s|\'s/,"s");
+    //     assData[i].answers[n] = assData[i].answers[n].replace(/\'/g, "\"");
+    //   }
+    // }
+    // console.log(assData);
+    // assData.forEach(function(item, index){
+    //   var qClass = "qid_"+item.answers.id;
+    //   console.log(qClass);
+    // });
+    //
+    var writeTable = function(data){
+      var $tableTemplate = document.querySelector("#table_template"),
+          template = Handlebars.compile($tableTemplate.innerHTML),
+          $container = document.querySelector("#table_wrapper");
+      $container.innerHTML = template({assessments: assessments, questions: questions});
+    };
+    //
+    function init(fn){
+      if(document.readyState != 'loading'){
+        fn();
+      } else {
+        document.addEventListener('DOMContentLoaded', fn);
+      }
+    }
+    //
+    init(function(){
+      // writeQuestions(questions);
+      // writeAnswers(answers);
+      writeTable({assessments: assessments, questions: questions});
+      assData.forEach(function(item, index){
+        item.forEach(function(i){
+          var qClass = ".qid_"+i.id;
+          document.querySelectorAll(qClass)[index].innerHTML = i.answer;
+          // console.log(qClass);
+        });
+        // var qClass = ".qid_"+item.id;
+        // console.log(item);
+        // document.querySelectorAll(qClass)[index].innerHTML = item.answer;
+      });
+    });
+  </script>
+</body>
+</html>

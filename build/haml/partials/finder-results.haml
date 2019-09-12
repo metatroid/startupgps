@@ -1,0 +1,147 @@
+#overviews
+  %ng-include{src: "'/angular/partials/manufacturing_overview.html'", ng-class: "{open: activeOverviews.indexOf('Manufacturing') != -1}", id: "Manufacturing_include"}
+  %ng-include{src: "'/angular/partials/development_overview.html'", ng-class: "{open: activeOverviews.indexOf('Development') != -1}", id: "Development_include"}
+  %ng-include{src: "'/angular/partials/customers_overview.html'", ng-class: "{open: activeOverviews.indexOf('Customers') != -1}", id: "Customers_include"}
+  %ng-include{src: "'/angular/partials/technical_overview.html'", ng-class: "{open: activeOverviews.indexOf('Technical') != -1}", id: "Technical_include"}
+  %ng-include{src: "'/angular/partials/sales_overview.html'", ng-class: "{open: activeOverviews.indexOf('Sales') != -1}", id: "Sales_include"}
+  %ng-include{src: "'/angular/partials/advisory_overview.html'", ng-class: "{open: activeOverviews.indexOf('Advisory') != -1}", id: "Advisory_include"}
+  %ng-include{src: "'/angular/partials/distribution_overview.html'", ng-class: "{open: activeOverviews.indexOf('Distribution') != -1}", id: "Distribution_include"}
+  %ng-include{src: "'/angular/partials/competition_overview.html'", ng-class: "{open: activeOverviews.indexOf('Competition') != -1}", id: "Competition_include"}
+  %ng-include{src: "'/angular/partials/brand_overview.html'", ng-class: "{open: activeOverviews.indexOf('Brand') != -1}", id: "Brand_include"}
+  %ng-include{src: "'/angular/partials/legal_overview.html'", ng-class: "{open: activeOverviews.indexOf('Legal') != -1}", id: "Legal_include"}
+  %ng-include{src: "'/angular/partials/metrics_overview.html'", ng-class: "{open: activeOverviews.indexOf('Metrics') != -1}", id: "Metrics_include"}
+  %ng-include{src: "'/angular/partials/productivity_overview.html'", ng-class: "{open: activeOverviews.indexOf('Productivity') != -1}", id: "Productivity_include"}
+.results-header
+  .container
+    .row
+      .col-xs-8
+        %span
+          Your results
+        %a.btn-link.code-edit-btn{ng-click: "codeModalActive = true; modalActive = true"}
+          Code: 
+          %strong
+            {{finderCode}} 
+          %span.signal-pencil
+        %a.btn-link{ng-click: "shareModalActive = true; modalActive = true; saveSVG()"}
+          Share
+        %a.btn-link{ng-click: "sendPDF()"}
+          Save
+      .col-xs-4
+        %a.btn-link.all-resources-link{ng-click: "showAllResourcesPopup();", ng-class: "{active: showAllResources}"}
+          Show all links for your assessment
+        -#%a.btn-link.exploring{href: "#"}
+          Start Exploring!
+.graph-container
+  .container
+    .row
+      .col-xs-12
+        #graph
+          .loading
+            %img{src: "/static/assets/img/load.svg", alt: "Loading"}
+.resource-container.resources-popup{ng-class: "{open: showAllResources === true}"}
+  .resources-popup-header
+    .container
+      .row
+        .col-xs-12
+          %h2.unbold
+            The full list of recommended links, based on your answers
+          %a.pull-right{ng-click: "showAllResources = false;goTo('finder.results');"}
+            %svg{version: "1.1", xmlns: "http://www.w3.org/2000/svg", x: "0", y: "0", width: "22", height: "22", viewBox: "0 0 22 22", 'xml:space': "preserve"}
+              %path{d: "M0 0 L22 22", fill: "#fff", stroke: "#fff", stroke-width: "2px"}
+              %path{d: "M0 22 L22 0", fill: "#fff", stroke: "#fff", stroke-width: "2px"}
+  .book-marker{scrollfix: "350", ng-show: "activeResources.length > 0 || showAllResources", scrollto: ".resources", scrolloffset: "0", ng-click: "showSavedResources()"}
+    %span
+      saved
+    .counter
+      %span
+        {{savedResources.length}}
+      %span.fa.fa-star
+  .resources{ng-show: "activeResources.length > 0 || showAllResources"}
+    .container
+      .row
+        .col-xs-12
+          .saved-resources{ng-show: "!hideSavedResources"}
+            %h3.unbold
+              Your personal library of saved links.
+            %ul.unstyled.inline
+              %li{ng-repeat: "r in savedResources"}
+                %a.block-level{ng-click: "bookMark(r)"}
+                  x
+                %span.fa.fa-star
+                %span.action-name
+                  {{r.resource_action.name}}
+                %a{href: "{{r.url}}", target: "_blank", ng-bind-html: "htmlSafe(r.title.substr(0,29) + '&hellip;')"}
+          .resource-block{ng-repeat: "(topic, resource) in resources", ng-if: "resource.metadata.resultset.count !== 0", ng-show: "activeResources.indexOf(topic) != -1 || showAllResources"}
+            %h3.unbold.pull-left
+              Here are the links specific to your stage in 
+              %strong
+                {{topic}}.
+            %a.btn-link{ui-sref: "library({filter: topic})"}
+              See all {{topic}} links
+            %ul.unstyled
+              %li{ng-repeat: "link in resource.result"}
+                .row
+                  .col-xs-6
+                    .row
+                      .col-xs-4
+                        .resource-info
+                          %a.block-level{ng-click: "bookMark(link)"}
+                            %span.fa.fa-star-o{ng-show: "!link.saved"}
+                            %span.fa.fa-star{ng-show: "link.saved"}
+                          %span.block-level
+                            {{link.resource_action.name}}
+                      .col-xs-8
+                        .resource-meta
+                          %span.sponsored{ng-if: "link.sponsored"}
+                            Sponsored
+                          %h3
+                            %a{href: "{{link.url}}", target: "_blank"}
+                              {{link.title}}
+                  .col-xs-6
+                    .resource-desc{ng-if: "link.description.length"}
+                      %p
+                        {{link.description.split(' ').splice(0, 20).join(' ')}} 
+                        -#%a.read-more{href: "{{link.url}}", target: "_blank"}
+                          more...
+
+  .container
+    .row
+      .col-xs-12
+        .panel.resource.top-priority-panel{ng-class: "{{classable(topPriority).toLowerCase()}}-panel"}
+          .resource-wrapper
+            .row
+              .col-xs-2
+                .resource-label.panel-label
+                  %strong
+                    {{topPriority}}
+                  %img{src: "/static/assets/img/wtfman5.png", alt: "{{topPriority}}"}
+              .col-xs-8
+                .resource-content.panel-body
+                  .resource-intro{ng-bind-html: "htmlSafe(priorityResource.intro_text)"}
+                  .resource-detail
+                    %h4
+                      %a{href: "{{priorityResource.url}}", target: "_blank", title: "{{priorityResource.title}}"}
+                        {{priorityResource.title}}
+                    %p
+                      {{priorityResource.description}}
+                  .more-resources
+                    %a.btn-link{href: "#"}
+                      See all {{topPriority}} links
+
+  .results-footer
+    .container
+      .row
+        .col-xs-12
+          %h5.unbold
+            What now?
+          %p
+            Invite your team members to take the assessment. <br>Compare results. Make progress together.
+
+#overlay{ng-class: "{open: finderModalActive}"}
+  .modal-wrap{ng-class: "{'share-modal': shareModalActive}"}
+    %a{ng-click: "finderModalActive = !finderModalActive"}
+      %svg{version: "1.1", xmlns: "http://www.w3.org/2000/svg", x: "0", y: "0", width: "32", height: "32", viewBox: "0 0 32 32", 'xml:space': "preserve"}
+        %path{d: "M0 0 L32 32", fill: "#fff", stroke: "#fff", stroke-width: "4px"}
+        %path{d: "M0 32 L32 0", fill: "#fff", stroke: "#fff", stroke-width: "4px"}
+    .modal-content{ui-view: "modal", ng-if: "!shareModalActive"}
+    .modal-content{ui-view: "share-modal", ng-if: "shareModalActive"}

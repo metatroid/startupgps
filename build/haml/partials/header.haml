@@ -1,0 +1,69 @@
+%nav.navbar.navbar-default
+  .container
+    .row
+      .col-xs-12
+        .navbar-header
+          %button.navbar-toggle.collapsed.misc-nav-toggle{type: "button", data-toggle: "collapse", data-target: "#main-nav", aria-expanded: "false", nav-toggle: true, ng-click: "menuOpen = !menuOpen"}
+            %span.sr-only
+              Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{ui-sref: "main"}
+            .logo
+              %img{src: "/static/assets/img/svg/StartupGPS_logo.svg", ng-show: "menuOpen === false", alt: "StartupGPS Logo"}
+              %img{src: "/static/assets/img/svg/StartupGPS_logo_whit.svg", ng-show: "menuOpen === true", alt: "StartupGPS Logo"}
+        .collapse.navbar-collapse#main-nav
+          %ul.nav.navbar-nav.pull-right
+            %li
+              %a{ui-sref: "library"}
+                Library
+            %li
+              %a{ui-sref: "finder"}
+                Pathfinder
+            %li
+              %a{ng-click: "assLoadReady = !assLoadReady"}
+                Past Scores
+            %li
+              %a{ui-sref: "about"}
+                About
+            %li
+              %a{ui-sref: "faq"}
+                FAQ
+            -#%li
+              #misc-nav{ng-class: "{open: miscNavOpen}"}
+                -#%a{ui-sref: "main"}
+                  Home
+                %a{ui-sref: "about"}
+                  About
+                %a{ui-sref: "faq"}
+                  FAQ
+                -#%a{ui-sref: "terms"}
+                  Terms
+                -#%a{ui-sref: "cookies"}
+                  Cookies
+
+              %button.navbar-toggle.misc-nav-toggle{ng-click: "toggleMiscNav()", ng-class: "{open: miscNavOpen}"}
+                %span.sr-only
+                  Toggle navigation
+                %span.icon-bar
+                %span.icon-bar
+                %span.icon-bar
+#assLoader{ng-show: "assLoadReady === true"}
+  .modal-wrap
+    %a{ng-click: "assLoadReady = false"}
+      %svg{version: "1.1", xmlns: "http://www.w3.org/2000/svg", x: "0", y: "0", width: "32", height: "32", viewBox: "0 0 32 32", 'xml:space': "preserve"}
+        %path{d: "M0 0 L32 32", fill: "#fff", stroke: "#fff", stroke-width: "4px"}
+        %path{d: "M0 32 L32 0", fill: "#fff", stroke: "#fff", stroke-width: "4px"}
+    .modal-inner
+      .modal-content
+        %strong
+          Load Past Assessment
+        %form{ng-submit: "pastAssLoad(formCode)"}
+          %label.sr-only{for: "assCode"}
+            Assessment Code
+          %input#assCode.form-control.ass-code{type: "text", ng-model: "formCode", placeholder: "Enter code"}
+          %button.btn-link{type: "submit"}
+            Go
+        .ass-feedback
+          %p{ng-bind-html: "htmlSafe(assFeedback)"}

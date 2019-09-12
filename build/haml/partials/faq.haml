@@ -1,0 +1,27 @@
+#faqs{ng-controller: "faqCtrl", scrollfix: "0"}
+  .container
+    .row
+      .col-xs-12.col-sm-4.col-md-3
+        #faq-nav.side-nav
+          .nav-header
+            %h1
+              FAQ
+          .search-wrapper
+            %form{ng-submit: "searchFaq(faqSearch)"}
+              %label.sr-only{for: "faqSearch"}
+                Search FAQs
+              %input{ng-model: "faqSearch", id: "faqSearch"}
+          %ul.unstyled.faq-nav-list{scrollnav: "scrollnav"}
+            %li{ng-repeat: "faq in faqs"}
+              %a{search-filter: "{{faq.question}}", ng-class: "{active: searchFilter.filter === faq.question}"}
+                {{faq.question}}
+      .col-xs-12.col-sm-8.col-md-8.col-md-offset-1
+        #faq-list
+          %ul.unstyled.main-faq-list
+            %li{ng-repeat: "faq in faqs", ng-show: "searchFilter.filter === faq.question || searchFilter.filter === 'all'"}
+              %h2
+                {{faq.question}}
+              .answer
+                %div{ng-bind-html: "htmlSafe(faq.answer)"}
+
+%ng-include{src: "'/angular/partials/site_footer.html'", id: "sitefoot"}

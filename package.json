@@ -1,0 +1,30 @@
+{
+  "name": "signalapp",
+  "version": "0.0.1",
+  "description": "necec toolkit",
+  "author": "Jon Gronberg",
+  "repository": {
+    "type": "git",
+    "url": "git@git.metatroid.com:root/signalapp.git"
+  },
+  "dependencies": {
+    "gulp": "latest"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "http://git.metatroid.com/root/signalapp/issues"
+  },
+  "homepage": "http://signal.dev",
+  "devDependencies": {
+    "es6-promise": "^4.1.1",
+    "gulp-autoprefixer": "latest",
+    "gulp-concat": "latest",
+    "gulp-copy": "latest",
+    "gulp-haml": "latest",
+    "gulp-imagemin": "latest",
+    "gulp-load-plugins": "latest",
+    "gulp-rename": "latest",
+    "gulp-sass": "latest",
+    "gulp-uglify": "latest"
+  }
+}

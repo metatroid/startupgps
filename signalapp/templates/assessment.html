@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StartupGPS Results</title>
+  <script src="/static/assets/js/handlebars.min.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="/static/assets/css/main.css">
+  <style type="text/css" media="screen,print">
+    body{
+      margin: 0;
+      position: relative;
+    }
+    svg{
+      position: absolute !important;
+      top: 100px !important;
+      left: 50% !important;
+      width: 825px;
+      height: 850px;
+      -webkit-transform: translateX(-50%) scale(0.8);
+      -moz-transform: translateX(-50%) scale(0.8);
+      transform: translateX(-50%) scale(0.8);
+    }
+    #chart{
+      position: relative;
+      height: 800px;
+      margin-bottom: 200px;
+    }
+    section{
+      page-break-before: always;
+      display: block;
+      clear: both;
+      padding: 50px 0 100px;
+      width: 1200px;
+    }
+    header h1{
+      text-transform: uppercase;
+      font-size: 22px;
+      font-weight: 400;
+    }
+    header h1 span{
+      color: #ef4527 !important;
+    }
+    #questions .answer .radio label input, #questions .answer .checkbox label input{
+      opacity: 1;
+    }
+    .answered{
+      color: #ef4527 !important;
+      font-weight: 500;
+    }
+    body{
+      font-size: 14px;
+    }
+    #questions .question strong{
+      font-size: 16px;
+    }
+    #questions .question .subtext{
+      font-size: 12px;
+    }
+    #questions .answer .form-control,
+    #questions .query.inline-range strong{
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <section id="chart">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <header>
+            <h1>StartupGPS Code <span>{{assessment.code}}</span></h1>
+          </header>
+        </div>
+      </div>
+    </div>
+    {{assessment.svg | safe}}
+  </section>
+  <section id="finder" style="page-break-before:always;">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <header>
+            <h1>Assessment Questions and Your Responses for <span>{{assessment.code}}</span></h1>
+          </header>
+          <form id="questions" class="form">
+            <div id="question_wrapper">
+              <script id="form_template" type="text/x-handlebars-template">
+                {% verbatim %}
+                  {{#each questions}}
+                    <div class="question" id="question_{{id}}" data-type="{{question_type}}">
+                      <div class="row">
+                        <div class="col-xs-10 col-xs-offset-2">
+                          <div class="query {{#ifCond question_type '==' 'inline-range'}}inline-range{{/ifCond}}">
+                            <strong>{{question_text}}</strong>
+                            {{#if question_subtext.length}}
+                              <div class="subtext">{{question_subtext}}</div>
+                            {{/if}}
+                          </div>
+                          <div class="answer {{#ifCond question_type '==' 'inline-range'}}inline-range{{/ifCond}}">
+                            {{#ifCond question_type '==' 'text'}}
+                              {{#each choices}}
+                                <div class="txt">
+                                  <input class="form-control" type="text" name="" value="" placeholder="Your text">
+                                </div>
+                              {{/each}}
+                            {{else}}
+                              {{#ifCond question_type '==' 'multi'}}
+                                <div class="choices">
+                                  <div class="checkboxes {{#ifCond choices.length '>' 5}}columns{{/ifCond}}">
+                                    {{#each choices}}
+                                      <div class="checkbox">
+                                        <label>
+                                          <input type="checkbox" name="" value="{{choice_text}}">
+                                          <span>{{choice_text}}</span>
+                                        </label>
+                                        {{#if include_text_field}}
+                                          <div class="txt other-txt">
+                                            <input class="form-control" type="text" name="" value="" placeholder="Your text">
+                                          </div>
+                                        {{/if}}
+                                      </div>
+                                    {{/each}}
+                                  </div>
+                                </div>
+                              {{else}}
+                                <div class="choices">
+                                  <div class="radios {{#ifCond choices.length '>' 5}}columns{{/ifCond}} {{#ifCond question_type '==' 'range'}}inline{{/ifCond}} {{#ifCond question_type '==' 'inline-range'}}inline{{/ifCond}}">
+                                    {{#each choices}}
+                                      <div class="radio {{#ifCond ../choices.length '>' 3}}hide-alt{{/ifCond}} {{#ifCond ../question_type '==' 'range'}}radio-inline{{/ifCond}} {{#ifCond ../question_type '==' 'inline-range'}}radio-inline{{/ifCond}}">
+                                        <label>
+                                          <input type="radio" name="" value="{{choice_text}}" placeholder="">
+                                          <span>{{choice_text}}</span>
+                                        </label>
+                                        {{#if include_text_field}}
+                                          <div class="txt other-txt">
+                                            <input class="form-control" type="text" name="" value="" placeholder="Your text">
+                                          </div>
+                                        {{/if}}
+                                      </div>
+                                    {{/each}}
+                                  </div>
+                                </div>
+                              {{/ifCond}}
+                            {{/ifCond}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/each}}
+                {% endverbatim %}
+              </script>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript">
+    var questions = {{questions | safe}};
+    var answers = {{assessment.answers | safe}};
+    console.log(questions);
+    console.log(answers);
+    //
+    Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+        switch (operator) {
+            case '==':
+                return (v1 == v2) ? options.fn(this) : options.inverse(this);
+            case '===':
+                return (v1 === v2) ? options.fn(this) : options.inverse(this);
+            case '<':
+                return (v1 < v2) ? options.fn(this) : options.inverse(this);
+            case '<=':
+                return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+            case '>':
+                return (v1 > v2) ? options.fn(this) : options.inverse(this);
+            case '>=':
+                return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+            case '&&':
+                return (v1 && v2) ? options.fn(this) : options.inverse(this);
+            case '||':
+                return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            default:
+                // return options.inverse(this);
+                return false;
+        }
+    });
+    //
+    var writeQuestions = function(questions){
+      var $formTemplate = document.querySelector("#form_template"),
+          template = Handlebars.compile($formTemplate.innerHTML),
+          $container = document.querySelector("#question_wrapper");
+      $container.innerHTML = template({questions: questions});
+    };
+    //
+    function init(fn){
+      if(document.readyState != 'loading'){
+        fn();
+      } else {
+        document.addEventListener('DOMContentLoaded', fn);
+      }
+    }
+    //
+    init(function(){
+      writeQuestions(questions);
+      for(var q=0;q<answers.length;q++){
+        var qId = "question_"+answers[q].id;
+        var qEl = document.getElementById(qId);
+        var type = qEl.getAttribute('data-type');
+        switch (type) {
+          case 'text':
+            if(qEl.querySelector("input[type=text]")){
+              qEl.querySelector("input[type=text]").value = answers[q].answer[0];
+              qEl.querySelector("input[type=text]").classList.add('answered');
+            }
+            break;
+          case 'multi':
+          case 'single':
+          case 'range':
+          case 'inline-range':
+            var checkboxes = qEl.querySelectorAll("input");
+            for(var c=0;c<checkboxes.length;c++){
+              if(answers[q].answer.indexOf(checkboxes[c].value) !== -1){
+                checkboxes[c].setAttribute('checked', true)
+                if(checkboxes[c].value == 'Other'){
+                  checkboxes[c].parentNode.parentNode.querySelector('input[type=text]').value = answers[q].other;
+                  checkboxes[c].parentNode.parentNode.querySelector('input[type=text]').classList.add('answered');
+                }
+              }
+            }
+            break;
+          default:
+            // statements_def
+            break;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,907 @@
+@import url(https://fonts.googleapis.com/css?family=Hind:300,400,600,700);
+@import 'fonts';
+@import 'libs/bootstrap/bootstrap';
+@import 'libs/font-awesome/font-awesome';
+@mixin placeholder{
+  $placeholders: ":-webkit-input" ":-moz" "-moz" "-ms-input";
+  @each $placeholder in $placeholders{
+    &:#{$placeholder}-placeholder{
+      @content;
+    }
+  }
+}
+$mobile-width: 767px;
+$mobile2-width: 410px;
+$tablet-width: 768px;
+$desktop-width: 769px;
+$wide-width: 1200px;
+@mixin phone {
+  @media (max-width: #{$mobile-width}){
+    @content;
+  }
+}
+@mixin phone2 {
+  @media (min-width: #{$mobile2-width}) and (max-width: #{$mobile-width}){
+    @content;
+  }
+}
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$tablet-width+1}){
+    @content;
+  }
+}
+@mixin phablet {
+  @media (max-width: #{$tablet-width+1}){
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: #{$desktop-width}){
+    @content;
+  }
+}
+@mixin mid {
+  @media (min-width: 769px) and (max-width: 1199px){
+    @content;
+  }
+}
+@mixin mid2 {
+  @media (min-width: 769px) and (max-width: 992px){
+    @content;
+  }
+}
+@mixin wide {
+  @media (min-width: #{$wide-width}){
+    @content;
+  }
+}
+$lime: #d8e504;
+$red: #ef4527;
+$green: #9c9617;
+$greenborder: #a59368;
+$olive: #b49564;
+$tan: #e89f52;
+$lightbrown: #e68312;
+$darkgreen: #557433;
+$lightgray: #cdcdcd;
+$textgray: #9b9595;
+$darktext: #413f33;
+$darkgray: #676764;
+$darkergray: #333333;
+
+$product-color: #8bbbeb;
+$market-color: #ffcf2a;
+$team-color: #97eae6;
+$operations-color: #dea754;
+$funding-color: #6fd1af;
+
+$hind: "Hind", sans-serif;
+body{
+  font-weight: 300;
+}
+h1,h2,h3,h4,h5,h6,strong{
+  font-weight: 600;
+}
+.unbold{
+  font-weight: normal;
+}
+.strong{
+  font-weight: 600;
+}
+.link-ul{
+  &:hover{
+    text-decoration: underline;
+  }
+}
+.unstyled{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.inline{
+  &:after{
+    content: '';
+    display: block;
+    width: 0;
+    clear: both;
+  }
+  li{
+    float: left;
+  }
+}
+.clear{
+  clear: both;
+}
+.block-level{
+  display: block;
+}
+.thirds{
+  li{
+    width: 33.3333333%;
+  }
+}
+.btn-link{
+  display: inline-block;
+  padding: 7px 12px 4px;
+  border: 1px solid;
+  border-radius: 5px;
+  outline: none;
+  &:hover{
+    border: 1px solid;
+    text-decoration: none;
+  }
+  &.disabled{
+    opacity: .3 !important;
+    cursor: not-allowed !important;
+  }
+}
+.form-control{
+  padding-bottom: 3px;
+}
+.loading{
+  text-align: center;
+}
+.noscroll{
+  overflow: hidden;
+}
+
+.fadein,
+.fadeout {
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+}
+
+.fadein.ng-hide-remove,
+.fadeout.ng-hide-add.ng-hide-add-active {
+  opacity: 0;
+  display: block !important;
+}
+
+.fadeout.ng-hide-add,
+.fadein.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
+  display: block !important;
+}
+
+#header{
+  &.menu-open{
+    background-color: $red;
+    .navbar-brand{
+      color: #fff;
+    }
+  }
+  .navbar{
+    min-height: 80px;
+  }
+  .navbar-header{
+    @include phone{
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+  }
+  nav{
+    background-color: #fff;
+    border-color: $greenborder;
+    border-width: 0 0 2px 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    @include desktop{
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    @include phone{
+      background-color: transparent;
+    }
+  }
+  .navbar-brand{
+    font-size: 36px;
+    color: $darktext;
+    padding: 0;
+    outline: none;
+    margin-top: 15px;
+    height: auto;
+    padding-bottom: 20px;
+    margin-left: 0;
+    max-width: 200px;
+    .logo{
+      margin-top: 6px;
+      @include phone{
+        margin-top: 4px;
+      }
+      img{
+        max-width: 220px;
+      }
+    }
+    span{
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+      &.name{
+        margin-top: 6px;
+        margin-left: 15px;
+        @include phone{
+          font-size: 31px;
+        }
+      }
+    }
+  }
+  .navbar-toggle{
+    border: none;
+    margin: 35px 0 0 15px;
+    background: transparent;
+    &:hover,
+    &:active,
+    &:focus{
+      background: transparent;
+    }
+    &.collapsed{
+      .icon-bar{
+        transition: opacity 0 linear;
+        background-color: $darktext;
+        &:nth-child(3){
+          opacity: 1;
+        }
+        &:nth-child(2){
+          transform: rotate(0deg);
+        }
+        &:nth-child(4){
+          transform: rotate(0deg);
+        }
+      }
+    }
+    .icon-bar{
+      transition: all 0s ease-in-out;
+      transform-origin: 3px;
+      width: 23px;
+      background-color: #fff;
+      &:nth-child(3){
+        opacity: 0;
+      }
+      &:nth-child(2){
+        transform: rotate(45deg);
+      }
+      &:nth-child(4){
+        transform: rotate(-45deg);
+      }
+    }
+  }
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form{
+    border-color: #fff;
+  }
+  #main-nav{
+    @include phone{
+      position: absolute;
+      z-index: 13;
+      width: 100%;
+      margin: 0;
+      left: 0;
+      background-color: $red;
+    }
+  }
+  .navbar-nav{
+    @include phone{
+      float: none !important;
+      margin: 0;
+      padding-top: 50px;
+      margin-bottom: 50px;
+    }
+    a{
+      font-size: 18px;
+      color: $darktext;
+      padding-bottom: 25px;
+      padding-top: 30px;
+      cursor: pointer;
+      transition: color .5s ease;
+      &:hover{
+        color: $red;
+      }
+      @include phone{
+        padding: 0;
+        text-align: center;
+        color: #fff;
+      }
+    }
+    > li{
+      @include phone{
+        margin-bottom: 30px;
+      }
+      &:last-of-type{
+        a{
+          padding-right: 0;
+        }
+      }
+    }
+    
+    #misc-nav{
+      float: left;
+      z-index: 11;
+      padding-top: 48px;
+      overflow: hidden;
+      max-width: 0;
+      transition: max-width .5s ease-in-out;
+      &.open{
+        max-width: 400px;
+      }
+      a{
+        padding: 10px 15px;
+      }
+    }
+    .open{
+      > a,
+      > a:hover
+      > a:focus{
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+}
+
+#sitefoot{
+  position: relative;
+  .sitefoot-container{
+    padding-top: 75px;
+    background-color: #eaeaea;
+    @include phone{
+      padding-top: 25px;
+    }
+  }
+  strong{
+    display: block;
+    font-weight: 600;
+    color: #323232;
+    margin-bottom: 20px;
+    font-size: 24px;
+    margin-top: 25px;
+    // @include mid2{
+    //   font-size: 18px;
+    // }
+  }
+  p{
+    color: #323232;
+    @include desktop{
+      padding-right: 10px;
+    }
+  }
+  .btn-link{
+    background-color: $red;
+    color: #fff;
+    font-size: 24px;
+    padding: 20px 25px;
+    display: inline-block;
+    transition: all .5s ease;
+    display: block;
+    width: auto;
+    max-width: 360px;
+    text-align: center;
+    &:hover{
+      background-color: darken($red, 10%);
+    }
+  }
+  .supporters{
+    a{
+      margin-bottom: 20px;
+      max-height: 92px;
+      &:first-of-type{
+        img{
+          margin-top: 10px;
+        }
+      }
+      &.sponsor-necec{
+        position: relative;
+        img{
+          transform: scale(0.7);
+          display: block;
+          position: absolute;
+          left: -38px;
+          top: -8px;
+          @include phone{
+            position: relative;
+          }
+        }
+      }
+      img{
+        max-width: 100%;
+      }
+    }
+  }
+  .lowerfoot{
+    border-top: 1px solid #323232;
+    padding-top: 40px;
+    margin-top: 45px;
+    padding-bottom: 120px;
+    a{
+      color: #323232;
+      margin-right: 25px;
+      font-weight: 600;
+      font-size: 21px;
+      text-transform: uppercase;
+      transition: color .5s ease;
+      &:hover{
+        color: $red;
+      }
+      @include phone{
+        margin-right: 15px;
+      }
+    }
+  }
+}
+.footer-container{
+  background-color: $red;
+  padding: 125px 0 90px;
+  position: relative;
+  z-index: 999;
+  @include phone{
+    padding: 50px 0 30px;
+  }
+  .contact{
+    margin-top: 70px;
+    color: #fff;
+    font-size: 10px;
+  }
+  .loading{
+    img{
+      height: 19px;
+      margin: 0 149px;
+    }
+  }
+  .right-arrow{
+    height: auto;
+    width: 30px;
+    // border: 5px solid;
+    // border-color: transparent #fff #fff transparent;
+    // transform: rotate(-45deg);
+    float: left;
+    margin-right: 14px;
+    margin-top: -10px;
+    font-family: 'signal-icons';
+    font-size: 36px;
+    color: #fff;
+    &:before{
+      content: "\e90f";
+    }
+    @include phone{
+      display: none;
+    }
+  }
+  .btn-link{
+    border-color: #fff;
+    border-width: 2px;
+    color: #fff;
+    padding: 10px 28px 8px;
+    font-size: 18px;
+    position: relative;
+    top: -11px;
+    right: -6px;
+    transition: all .25s ease-in-out;
+    &:hover{
+      color: #000;
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+    @include wide{
+      font-size: 24px;
+      top: -14px;
+    }
+    @include phone{
+      right: 0;
+      display: block;
+      text-align: center;
+      padding: 10px 0 8px;
+      width: 100%;
+    }
+  }
+}
+.fix-element{
+  .finder-progress{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 13;
+  }
+  .side-nav{
+    position: fixed;
+    top: 0;
+  }
+  .team-container{
+    padding-top: 110px;
+  }
+  @include phone{
+    &.library,
+    &.finder-result{
+      padding-top: 70px;
+    }
+    &.finder{
+      padding-top: 40px;
+    }
+  }
+}
+
+// .fix-bookmarker{
+//   .book-marker{
+//     position: fixed;
+//     left: 0;
+//     top: 350px;
+//   }
+// }
+.book-marker{
+  background-color: $darkgray;
+  width: 50px;
+  height: 80px;
+  overflow: hidden;
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+  border: 1px solid;
+  border-color: #fff;
+  border-left-width: 0;
+  outline: none;
+  &.fix-position{
+    position: fixed;
+    left: 0;
+    top: 275px;
+    @include phone{
+      top: 265px;
+    }
+  }
+  &.active{
+    border-color: $darkgray;
+    background-color: #fff;
+    >span{
+      color: $darkgray;
+    }
+    .counter{
+      border-color: $darkgray;
+      color: $darkgray;
+    }
+  }
+  &.saving{
+    .fa-star:after {
+      content: "\f005";
+      animation: pulsate1 1s ease-out forwards;
+    }
+    .fa-star:before {
+      animation: pulsate2 1s ease-out forwards;
+    }
+  }
+  .fa-star{
+    position: absolute;
+    left: 50%;
+    margin-left: -8px;
+  }
+  .fa-star:after {
+    content: "\f005";
+  }
+  .fa-star:after,
+  .fa-star:before{
+    position: absolute;
+  }
+  >span{
+    color: #fff;
+    text-transform: uppercase;
+    display: block;
+    text-align: center;
+    font-size: 10px;
+    padding-top: 2px;
+    font-weight: 600;
+  }
+  .counter{
+    border-top: 1px solid #fff;
+    margin-top: 0px;
+    padding-top: 5px;
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    span{
+      margin-bottom: 2px;
+      display: block;
+      text-align: center;
+      transition: all .5s ease-in-out;
+    }
+  }
+}
+@keyframes pulsate1{
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+@keyframes pulsate2{
+  0% {
+    transform: scale(.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.resExporters{
+  margin: 20px 0;
+  a{
+    display: block;
+    float: left;
+    width: 32px !important;
+    height: 32px !important;
+    margin-right: 10px !important;
+    background-color: $textgray;
+  }
+}
+.saved-resources{
+  padding-bottom: 20px;
+  border-bottom: 1px solid $greenborder;
+  ul{
+    li{
+      width: 18%;
+      padding: 10px;
+      margin-right: 2%;
+      height: 95px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid $darkgray;
+      border-radius: 5px;
+      @include phone{
+        width: 48%;
+        height: 110px;
+      }
+      span{
+        color: $red;
+        font-size: 18px;
+        &.action-name{
+          color: $textgray;
+          font-size: 14px;
+          margin-left: 4px;
+        }
+      }
+      a{
+        display: block;
+        font-size: 16px;
+        &.block-level{
+          position: absolute;
+          right: 3px;
+          top: 0px;
+          color: $darktext;
+          font-size: 10px;
+          cursor: pointer;
+          font-family: monospace;
+        }
+      }
+    }
+  }
+}
+
+.assload{
+  padding-top: 120px;
+  padding-bottom: 25px;
+  @media(min-width: 769px){
+    input[type=text]{
+      width: 32%;
+      float: left;
+      margin-right: 20px;
+    }
+  }
+  strong{
+    font-size: 18px;
+    display: block;
+    margin-top: 25px;
+    margin-bottom: 12.5px;
+  }
+  .ass-code{
+    margin-bottom: 20px;
+    border-color: $darkgray;
+  }
+  span.errors{
+    margin-left: 20px;
+    font-size: 12px;
+    color: $red;
+  }
+  @include phone{
+    padding-top: 25px;
+  }
+  .btn-link{
+    color: $red;
+    transition: all .5s ease;
+    background-color: rgba($red, 0);
+    &:hover{
+      color: #fff;
+      background-color: rgba($red, 1);
+    }
+  }
+}
+#assLoader{
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.85);
+  z-index: 13;
+  opacity: 1;
+  pointer-events: all;
+  transition: all .5s ease-in-out;
+  &.ng-hide{
+    opacity: 0;
+    pointer-events: none;
+    .modal-wrap{
+      opacity: 0;
+    }
+  }
+  .modal-wrap{
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 13;
+    max-width: 540px;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+    > a{
+      position: absolute;
+      right: -57px;
+      top: 0;
+      cursor: pointer;
+    }
+    .modal-inner{
+      padding: 45px 95px;
+    }
+    .modal-content{
+      box-shadow: none;
+      border: none;
+      strong{
+        display: block;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 29px;
+      }
+      p{
+        font-size: 14px;
+      }
+      form{
+        padding: 5px 0 30px;
+        position: relative;
+        &:after{
+          content: "\f00c";
+          font-family: 'FontAwesome';
+          display: block;
+          position: absolute;
+          right: 8px;
+          top: 12px;
+          font-size: 18px;
+          color: $red;
+          z-index: 3;
+          opacity: 0;
+        }
+        &.valid-count{
+          &:after{
+            opacity: 1;
+          }
+        }
+        .errors{
+          font-size: 10px;
+          color: $red;
+          position: absolute;
+          top: 44px;
+          left: 0;
+        }
+        input{
+          border-color: #a6a2a1;
+          color: $red;
+          font-size: 16px;
+          padding-right: 36px;
+          line-height: normal;
+          vertical-align: middle;
+          margin-bottom: 20px;
+          @include placeholder{
+            color: $textgray;
+          }
+          &.ng-dirty,
+          &:focus,
+          &:active,
+          &:hover{
+            border-color: $red;
+            color: $red;
+            outline: none;
+            box-shadow: none;
+            @include placeholder{
+              color: $red;
+            }
+          }
+        }
+      }
+      a{
+        font-size: 16px;
+        color: $red;
+        border-color: $red;
+        margin-right: 15px;
+        cursor: pointer;
+      }
+      #share_btn{
+        width: 182px;
+      }
+      .errors{
+        display: block;
+        font-size: 12px;
+        margin-top: 8px;
+        color: $red;
+      }
+    }
+    @include phone{
+      max-width: 100%;
+      > a{
+        top: -45px;
+        right: 15px;
+      }
+      .modal-inner{
+        padding: 25px 35px;
+      }
+      .modal-content{
+        min-width: 200px;
+        h2{
+          font-size: 20px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
+#thoughts{
+  cursor: pointer;
+}
+
+.resource-link-list{
+  a{
+    transition: border-color .5s ease;
+    &.down{
+      &:hover{
+        border-color: darken($red, 10%) transparent transparent transparent;
+      }
+    }
+    &.up{
+      &:hover{
+        border-color: transparent transparent darken($red, 10%) transparent;
+      }
+    }
+  }
+  li.voted{
+    position: relative;
+    &:after{
+      content: "You may only vote up/down once per link!";
+      position: absolute;
+      left: 0;
+      bottom: 5px;
+      color: $red;
+      font-size: 12px;
+    }
+  }
+  .source{
+    font-size: 12px;
+    font-style: italic;
+    color: #808080;
+    margin-top: 5px !important;
+  }
+  .resource-voting{
+    @include phone{
+      text-align: left;
+      top: 5px;
+      .up,
+      .down{
+        margin: 0;
+      }
+      span{
+        margin-left: 8px;
+      }
+    }
+  }
+}
+
+.resource-voting{
+  display: none;
+}

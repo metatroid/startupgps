@@ -1,0 +1,19 @@
+{
+  "name": "signalapp",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-django-rest-resource": "~1.0.3",
+    "angular-ui-router": "~0.2.15",
+    "angular-ui-router-styles": "~0.0.6",
+    "bootstrap-sass": "~3.3.5",
+    "components-font-awesome": "~4.4.0"
+  },
+  "resolutions": {
+    "angular": "~1.4.5"
+  },
+  "devDependencies": {
+    "angular-google-analytics": "~1.1.6",
+    "handlebars": "~4.0.5"
+  }
+}

@@ -1,0 +1,19 @@
+.modal-inner
+  %h2
+    Change Your Code
+  %p
+    Finder is about growing your company and tracking progress. To get the most out of your assessment, we recommend taking it periodically, and inviting your team to take it as well so you can compare results and grow together.
+  %p
+    To access your results for this assessment at any time, your code is: 
+    %strong
+      {{finderCode}}
+  %p
+    You can create a custom code below:
+  .code-update{ng-class: "{'valid-count': customCode.length > 5}"}
+    %input.form-control{type: "text", ng-model: "customCode", placeholder: "Enter a code"}
+    %span.errors{ng-if: "updateCodeError", ng-bind-html: "htmlSafe(updateCodeError)"}
+  %a.btn-link{ng-click: "activateModal('share'); saveSVG()"}
+    Email your results
+  %a.btn-link{ng-click: "updatingCode = true; updateCode(customCode)"}
+    Done!
+  %img{src: "/static/assets/img/load.svg", ng-show: "updatingCode", alt: "Loading"}

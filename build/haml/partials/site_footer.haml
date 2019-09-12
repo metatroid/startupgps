@@ -1,0 +1,37 @@
+#sitefoot
+  .sitefoot-container
+    .container
+      .row
+        .col-sm-5
+          %strong
+            Your feedback improves this website!
+          %p
+            When you let us know what works and what we can do better, that helps us make a more useful tool for you.
+          <a class="btn-link" id="thoughts" data-uv-trigger uv-target>
+            Share Your Thoughts
+          </a>
+        .col-sm-7.supporters
+          .row
+            .col-sm-6
+              %strong
+                Supported by
+              %a.sponsor-nyserda{href: "http://www.nyserda.ny.gov/", target: "_blank", title: "NYSERDA homepage"}
+                %img{src: "/static/assets/img/nyserda.png", alt: "NYSERDA homepage"}
+            .col-sm-6
+              %strong
+                Managed by
+              %a.sponsor-necec{href: "http://www.necec.org/", target: "_blank", title: "NECEC homepage"}
+                %img{src: "/static/assets/img/necec.png", alt: "NECEC homepage"}
+      .row
+        .col-xs-12
+          .lowerfoot
+            %a{ui-sref: "main"}
+              Home
+            %a{ui-sref: "about"}
+              About
+            %a{ui-sref: "faq"}
+              FAQ
+            %a{ui-sref: "terms"}
+              Terms
+            -#%a{ui-sref: "cookies"}
+              Cookies

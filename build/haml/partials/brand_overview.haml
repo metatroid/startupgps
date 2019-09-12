@@ -1,0 +1,70 @@
+.topic-overview{ng-show: "activeOverviews.indexOf('Brand') != -1 || showAllOverviews"}
+  .overview-header
+    .container
+      .row
+        .col-xs-12
+          %h2.unbold
+            {{brandItem.topic}}: 
+            %strong
+              {{brandItem.theme}}
+          %span
+            You scored {{Math.ceil(brandItem.score)}} out of {{brandItem.possible}} points - {{Math.round((Math.ceil(brandItem.score)/brandItem.possible)*100)}}%
+          %a.pull-right{ng-click: "unsetActiveOverview()"}
+            %svg{version: "1.1", xmlns: "http://www.w3.org/2000/svg", x: "0", y: "0", width: "22", height: "22", viewBox: "0 0 22 22", 'xml:space': "preserve"}
+              %path{d: "M0 0 L22 22", fill: "#fff", stroke: "#fff", stroke-width: "2px"}
+              %path{d: "M0 22 L22 0", fill: "#fff", stroke: "#fff", stroke-width: "2px"}
+  .overview-questions#questions
+    .container
+      .row
+        .col-xs-12
+          .question-wrapper
+            .row
+              .question{id: "question_{{question.id}}", ng-repeat: "question in brandItem.questions", ng-class: "{'col-xs-12': brandItem.questions.length < 2, 'col-xs-6': brandItem.questions.length > 1, 'inline-range': question.question_type === 'inline-range'}"}
+                .row
+                  .col-xs-12
+                    %fieldset
+                      .query{ng-class: "{'inline-range': question.question_type === 'inline-range'}"}
+                        .question-info
+                          For the question
+                          %legend
+                            {{question.question_text}}
+                          %strong
+                            You answered
+                      .answer{ng-class: "{'inline-range': question.question_type === 'inline-range'}"}
+                        %div{ng-if: "question.question_type !== 'text'"}
+                          %div.choices{ng-if: "question.question_type === 'multi'"}
+                            .checkboxes{ng-class: "{columns: question.choices.length > 5}"}
+                              .checkbox{ng-repeat: "choice in question.choices"}
+                                .xlabel{label-fake: "click"}
+                                  %input{type: "checkbox", name: "question_{{question.id}}", id: "choice_{{choice.id}}", value: "{{choice.choice_text}}", ng-model: "formData[question.id].choices[$index].answer_text", ng-change: "answer(question, choice)"}
+                                  %label.radio-mock{for: "choice_{{choice.id}}"}
+                                    {{choice.choice_text}}
+                                  %span
+                                    {{choice.choice_text}}
+                                .txt.other-txt{ng-if: "choice.include_text_field", ng-show: "formData[question.id].choices[$index].answer_text"}
+                                  %label.other-label.sr-only{for: "question_{{question.id}}_input"}
+                                    Other
+                                  %input.form-control{type: "text", name: "question_{{question.id}}", id: "question_{{question.id}}_input", placeholder: "Your text", ng-model: "formData[question.id].choices[$index].other_text", ng-blur: "answer(question, choice)"}
+                          %div.choices{ng-if: "question.question_type !== 'multi'"}
+                            .radios{ng-class: "{columns: question.choices.length > 5, inline: (question.question_type === 'range' || question.question_type === 'inline-range')}"}
+                              .radio{ng-repeat: "choice in question.choices", ng-class: "{'radio-inline': (question.question_type === 'range'  || question.question_type === 'inline-range'), 'hide-alt': (question.choices.length>3)}"}
+                                .xlabel{label-fake: "click"}
+                                  %input{type: "radio", name: "question_{{question.id}}", id: "choice_{{choice.id}}", value: "{{choice.choice_text}}", ng-model: "formData[question.id].user_response[0].answer_text", ng-change: "answer(question, choice)"}
+                                  %label.radio-mock{for: "choice_{{choice.id}}"}
+                                    {{choice.choice_text}}
+                                  %span
+                                    {{choice.choice_text}}
+                                .txt.other-txt{id: "other_{{choice.id}}", ng-if: "choice.include_text_field", ng-show: "formData[question.id].user_response[0].answer_text === 'Other'"}
+                                  %label.other-label.sr-only{for: "question_{{question.id}}_input"}
+                                    Other
+                                  %input.form-control{type: "text", name: "question_{{question.id}}", id: "question_{{question.id}}_input", placeholder: "Your text", ng-model: "formData[question.id].user_response[0].answer_text_other", ng-blur: "insertAnswer(question.id, formData[question.id].user_response[0].answer_text_other)"}
+                        %div{ng-if: "question.question_type === 'text'"}
+                          .txt{ng-repeat: "choice in question.choices"}
+                            %label.other-label.sr-only{for: "question_{{question.id}}_input"}
+                              {{question.question_text}}
+                            %input.form-control{type: "text", name: "question_{{question.id}}", id: "question_{{question.id}}_input", placeholder: "Your text", ng-model: "formData[question.id].user_response[0].answer_text", ng-blur: "answer(question, choice)"}
+                      .question-results
+                        %strong
+                          we gave you a score of {{question.answer[0].answer_score}}.
+  .resource-container
+    %ng-include{src: "'/angular/partials/resource-list.html'"}

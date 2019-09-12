@@ -1,0 +1,7 @@
+.interpret-wrapper
+  .modal-inner
+    %h2
+      {{interpret.alias}}
+    %div{ng-bind-html: "htmlSafe(interpret.content)"}
+    -#%a.btn-link{ng-click: "interpetModalActive = false"}
+      Close

@@ -1,0 +1,57 @@
+#homepage
+  .container
+    .row
+      .col-xs-12.col-sm-8.col-md-4
+        .homepage.homepage-text
+          %h1
+            There is no map for startups, but there is StartupGPS.
+          %p
+            This website was built to help founders in the earliest stages of their entrepreneurial journey. 
+          %p
+            If you’re trying to find your coordinates, we recommend taking our Pathfinder Survey to get yourself started.
+          %p
+            If you know what needs to be done, browse the full library below to find relevant advice and tools. All for free.
+          %a.btn-link{ui-sref: "finder", title: "Pathfinder"}
+            Get Started with Pathfinder
+      .col-sm-4.col-md-8.col-xs-12
+        .homepage.homepage-graphic
+          %img{src: "/static/assets/img/radar.svg", alt: "StartupGPS radar chart"}
+          %span.visible-xs.ddown.pull-right{href: "#", scrollto: "#libExplorer", scrolloffset: "0"}
+            %span.fa.fa-caret-down
+            %span.fa.fa-caret-down
+#libExplorer
+  .container
+    .row
+      .col-xs-12.col-md-5
+        .lib-explorer.explore-text
+          %p
+            To browse our library of links, start by selecting the topic that's most interesting to you.
+      .col-xs-12.col-md-7
+        .lib-explorer.explore-links
+          %ul.unstyled.inline
+            %li.libsquare
+              %a.Product-square{ui-sref: "library({filter: 'Product'})", title: "Product"}
+                %span.wrapper
+                  %span.signal-icon.signal-icon-Product_white
+                  Product
+            %li.libsquare
+              %a.Market-square{ui-sref: "library({filter: 'Market'})", title: "Market"}
+                %span.wrapper
+                  %span.signal-icon.signal-icon-Market_white
+                  Market
+            %li.libsquare
+              %a.Team-square{ui-sref: "library({filter: 'Team'})", title: "Team"}
+                %span.wrapper
+                  %span.signal-icon.signal-icon-Team_white
+                  Team
+            %li.libsquare
+              %a.Operations-square{ui-sref: "library({filter: 'Operations'})", title: "Operations"}
+                %span.wrapper
+                  %span.signal-icon.signal-icon-Operations_white
+                  Operations
+            %li.libsquare
+              %a.Funding-square{ui-sref: "library({filter: 'Funding'})", title: "Funding"}
+                %span.wrapper
+                  %span.signal-icon.signal-icon-Funding_white
+                  Funding
+%ng-include{src: "'/angular/partials/site_footer.html'", id: "sitefoot"}

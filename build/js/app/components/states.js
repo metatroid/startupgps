@@ -1,0 +1,1 @@
+angular.module('signalapp.states', ['ui.router', 'uiRouterStyles']);

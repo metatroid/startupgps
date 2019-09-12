@@ -1,0 +1,6 @@
+#cookies
+  .container
+    .row
+      .col-sm-12.col-md-7
+        %div{ng-bind-html: "htmlSafe(cookies.content)"}
+%ng-include{src: "'/angular/partials/site_footer.html'", id: "sitefoot"}

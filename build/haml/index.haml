@@ -1,0 +1,37 @@
+!!! 5
+%html{ng-app: "signalapp", lang: "en"}
+  %head
+    %title{state-title: true}
+      StartupGPS
+    %meta{charset: "UTF-8"}
+    %meta{name: "description", content: "StartupGPS - There's no map for startups...StartupGPS is a resource for entrepreneurs who need help finding their way"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
+    %base{href: "/"}
+    %link{rel: "apple-touch-icon", sizes: "180x180", href: "/static/favicon/apple-icon-180x180.png"}
+    %link{rel: "apple-touch-icon", sizes: "152x152", href: "/static/favicon/apple-icon-152x152.png"}
+    %link{rel: "apple-touch-icon", sizes: "144x144", href: "/static/favicon/apple-icon-144x144.png"}
+    %link{rel: "apple-touch-icon", sizes: "120x120", href: "/static/favicon/apple-icon-120x120.png"}
+    %link{rel: "apple-touch-icon", sizes: "114x114", href: "/static/favicon/apple-icon-114x114.png"}
+    %link{rel: "apple-touch-icon", sizes: "76x76", href: "/static/favicon/apple-icon-76x76.png"}
+    %link{rel: "apple-touch-icon", sizes: "72x72", href: "/static/favicon/apple-icon-72x72.png"}
+    %link{rel: "apple-touch-icon", sizes: "60x60", href: "/static/favicon/apple-icon-60x60.png"}
+    %link{rel: "apple-touch-icon", sizes: "57x57", href: "/static/favicon/apple-icon-57x57.png"}
+    %link{rel: "icon", type: "image/png", href: "/static/favicon/favicon-32x32.png", sizes: "32x32"}
+    %link{rel: "icon", type: "image/png", href: "/static/favicon/favicon-16x16.png", sizes: "16x16"}
+    %link{rel: "icon", type: "image/png", href: "/static/favicon/favicon-96x96.png", sizes: "96x96"}
+    %link{rel: "manifest", href: "/static/favicon/manifest.json"}
+    %link{rel: "mask-icon", href: "/static/favicon/safari-pinned-tab.svg", color: "#5bbad5"}
+    %meta{name: "theme-color", content: "#ffffff"}
+    %meta{name: "msapplication-config", content: "/static/favicon/browserconfig.xml"}
+
+    %link{rel: "stylesheet", href: "/static/assets/css/main.css"}
+    %script{src: "/static/assets/js/raphael.js"}
+    %script{src: "/static/assets/js/main.min.js"}
+    %script{src: "/static/assets/js/angulytics.min.js"}
+    :javascript
+      window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website.","dismiss":"Got it!","learnMore":"More info","link":"https://startupgps.org/#/terms","theme":"dark-bottom"};
+    %script{src: "//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"}
+
+  %body{ng-controller: "mainCtrl", ng-class: "{noscroll: filtersOpen === true}"}
+    #main{ui-view: "main", autoscroll: "true"}
+    

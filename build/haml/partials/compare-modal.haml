@@ -1,0 +1,13 @@
+.modal-inner
+  %h2
+    Compare Results
+  %p
+    Want to compare results? Enter the code for a previous result and we’ll compare it to this most current one...
+  %form{ng-submit: "loadAssessment(assessmentCode)"}
+    .compare-input
+      %input#assCodeOther.form-control.ass-code{type: "text", ng-model: "assessmentCode", placeholder: "Enter code"}
+    .compare-actions
+      %button.btn-link{type: "submit"}
+        Go
+    %span.errors
+      {{assLoadErrors}}

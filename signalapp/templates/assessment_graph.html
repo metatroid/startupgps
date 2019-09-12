@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>StartupGPS Results</title>
+  <script src="/static/assets/js/handlebars.min.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="/static/assets/css/main.css">
+  <style type="text/css" media="screen,print">
+    body{
+      margin: 0;
+      position: relative;
+    }
+    svg{
+      position: absolute !important;
+      top: 10px !important;
+      left: 50% !important;
+      width: 825px;
+      height: 850px;
+      -webkit-transform: translateX(-50%) scale(0.8);
+      -moz-transform: translateX(-50%) scale(0.8);
+      transform: translateX(-50%) scale(0.8);
+      -webkit-transform-origin: center top;
+      -moz-transform-origin: center top;
+      transform-origin: center top;
+    }
+    #chart{
+      position: relative;
+      height: 800px;
+    }
+  </style>
+</head>
+<body>
+  <section id="chart">
+    {{assessment.svg | safe}}
+  </section>
+</body>
+</html>
